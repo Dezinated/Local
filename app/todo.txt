@@ -1,0 +1,10 @@
+create a hash function which takes in author id and timestamp to create a value unique to that author id
+the purpose of this function is so that when uploading a comment you dont need to include your author id
+this hash represents the users auth for that specific post
+
+create a back end database that can be used with sql
+makes it easy to switch from firebase to our own servers
+
+create layout for commenting
+
+create layout for report system
