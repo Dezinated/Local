@@ -19,8 +19,7 @@
             android:id="@+id/postText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView" />
+            android:layout_weight="1" />
 
         <LinearLayout
             android:id="@+id/postRatings"
@@ -34,14 +33,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="0" />
+                android:gravity="center" />
 
             <ImageButton
                 android:id="@+id/upVoteButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/upVote"
                 app:srcCompat="@android:drawable/arrow_up_float" />
 
             <ImageButton
@@ -49,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/downVote"
                 app:srcCompat="@android:drawable/arrow_down_float" />
 
         </LinearLayout>
@@ -64,17 +64,20 @@
 
         <Button
             android:id="@+id/reportButton"
+            style="@style/Widget.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Report" />
+            android:text="@string/report"
+            android:textColorLink="@color/colorPrimary" />
 
         <Button
             android:id="@+id/commentButton"
+            style="@style/Widget.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Comment" />
+            android:text="@string/comment" />
     </LinearLayout>
 
 </LinearLayout>
