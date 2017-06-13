@@ -40,6 +40,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:dividerHeight="15dp"
+                android:smoothScrollbar="true"
+                android:stackFromBottom="false"
                 tools:listitem="@layout/post" />
         </LinearLayout>
     </LinearLayout>

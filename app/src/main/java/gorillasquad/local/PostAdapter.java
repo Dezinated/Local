@@ -32,19 +32,17 @@ public class PostAdapter extends ArrayAdapter<Post> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View v = convertView;
+        LayoutInflater vi;
+        vi = LayoutInflater.from(getContext());
+        v = vi.inflate(R.layout.post,null);
 
-        if (v == null) {
-            LayoutInflater vi;
-            vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.post,null);
-        }
+        final Post p = getItem(position);
 
-        Post p = getItem(position);
+        TextView postText = (TextView) v.findViewById(R.id.postText);
+        TextView rating = (TextView) v.findViewById(R.id.rating);
 
-        if (p != null) {
-            TextView tt1 = (TextView) v.findViewById(R.id.postText);
-            tt1.setText(p.getText());
-        }
+        postText.setText(p.getText());
+        rating.setText(p.getRating()+"");
 
         ImageButton upVoteButton = (ImageButton) v.findViewById(R.id.upVoteButton);
         ImageButton downVoteButton = (ImageButton) v.findViewById(R.id.downVoteButton);
@@ -55,13 +53,13 @@ public class PostAdapter extends ArrayAdapter<Post> {
         upVoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ph.upVote(p.getKey());
+                ph.vote(p.getKey(),true);
             }
         });
         downVoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ph.downVote(p.getKey());
+                ph.vote(p.getKey(),false);
             }
         });
 

@@ -26,23 +26,19 @@ public class Database {
         return instance;
     }
 
-    public void addNew(String location,String[] keys, Object... values ){
+    public void addNew(String location,Map<String,Object> values,boolean addKey){
         DatabaseReference db = database.getReference(location);
 
         DatabaseReference newAddition = db.push();
-        Map entry = new HashMap<String,Object>();
-        for(int i=0;i<values.length;i++) {
-            if(keys[i].equals("key")) {
-                entry.put("key", newAddition.getKey().toString());
-            }else {
-                entry.put(keys[i], values[i]);
-            }
-            //dont do this
-            //newAddition.child(keys[i]).setValue(values[i]);
-            //it will make onchildadded only trigger once and onchildchanged multiple times
-            //just update info all in 1 go
+        if(addKey) {
+            values.put("key", newAddition.getKey().toString());
         }
-        newAddition.setValue(entry);
+        newAddition.setValue(values);
+    }
+
+    public void update(String location,Map<String,Object> values) {
+        DatabaseReference db = database.getReference(location);
+        db.updateChildren(values);
     }
 
     public void getValue(){

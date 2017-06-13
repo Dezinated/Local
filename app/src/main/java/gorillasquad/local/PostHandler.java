@@ -29,24 +29,30 @@ public class PostHandler {
         db = Database.getDB();
         myId = id;
         pa = new PostAdapter(c,getPosts(),this);
-        db.getPostsRef().addChildEventListener(postListener);
+        db.getPostsRef().orderByChild("timestamp").addChildEventListener(postListener);
         Log.d(TAG,db.getPostsRef().toString());
     }
 
     public void addPost(String text) {
         Log.d(TAG,"Adding new post");
-        String[] keys = new String[] {"key","author","text","timestamp","rating","reports"};
+
         long time = System.currentTimeMillis();
-        db.addNew("root/post",keys,"key",myId,text,time,0,0);
+        Post p = new Post(myId,text,time,0,0);
+        db.addNew("root/post",p.toMap(),true);
     }
 
-    public void upVote(int postId) {
-
+    public void vote(String postId,boolean upVote) {
+        for(Post p:posts) {
+            if(p.getKey().equals(postId)){
+                if(upVote)
+                    p.setRating(p.getRating()+1);
+                else
+                    p.setRating(p.getRating()-1);
+                db.update("root/post/"+p.getKey(),p.toMap());
+            }
+        }
     }
 
-    public void downVote(int postId) {
-
-    }
 
     public void report(int id, String text) {
 
@@ -65,13 +71,23 @@ public class PostHandler {
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             Post post = dataSnapshot.getValue(Post.class);
             Log.d(TAG,"Text: " + dataSnapshot.toString());
-            posts.add(post);
+            posts.add(0,post);
             pa.notifyDataSetChanged();
         }
 
         @Override
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            Post post = dataSnapshot.getValue(Post.class);
+            Log.d(TAG,"Text: " + dataSnapshot.toString());
+            Log.d(TAG,"Text: " + post.getKey());
+            for(Post p:posts) {
+                Log.d(TAG,"Text: " + p.getKey());
+                if(p.getKey().equals(post.getKey())){
+                    posts.set(posts.indexOf(p),post);
+                }
+            }
 
+            pa.notifyDataSetChanged();
         }
 
         @Override
