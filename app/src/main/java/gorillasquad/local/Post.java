@@ -7,6 +7,8 @@ package gorillasquad.local;
 public class Post {
 
     private String text;
+    private int timestamp;
+    private int rating;
 
     public Post(String text) {
         this.text = text;
@@ -14,5 +16,9 @@ public class Post {
 
     public String getText() {
         return text;
+    }
+
+    public int getRating() {
+        return rating;
     }
 }
