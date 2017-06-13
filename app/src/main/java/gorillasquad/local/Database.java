@@ -32,7 +32,11 @@ public class Database {
         DatabaseReference newAddition = db.push();
         Map entry = new HashMap<String,Object>();
         for(int i=0;i<values.length;i++) {
-            entry.put(keys[i],values[i]);
+            if(keys[i].equals("key")) {
+                entry.put("key", newAddition.getKey().toString());
+            }else {
+                entry.put(keys[i], values[i]);
+            }
             //dont do this
             //newAddition.child(keys[i]).setValue(values[i]);
             //it will make onchildadded only trigger once and onchildchanged multiple times

@@ -6,6 +6,7 @@ package gorillasquad.local;
 
 public class Post {
 
+    private String key;
     private String text;
     private int timestamp;
     private int rating;

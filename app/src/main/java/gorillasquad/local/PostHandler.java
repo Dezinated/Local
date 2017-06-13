@@ -28,16 +28,16 @@ public class PostHandler {
         posts = new ArrayList<Post>();
         db = Database.getDB();
         myId = id;
-        pa = new PostAdapter(c,getPosts());
+        pa = new PostAdapter(c,getPosts(),this);
         db.getPostsRef().addChildEventListener(postListener);
         Log.d(TAG,db.getPostsRef().toString());
     }
 
     public void addPost(String text) {
         Log.d(TAG,"Adding new post");
-        String[] keys = new String[] {"author","text","timestamp","rating","reports"};
+        String[] keys = new String[] {"key","author","text","timestamp","rating","reports"};
         long time = System.currentTimeMillis();
-        db.addNew("root/post",keys,myId,text,time,0,0);
+        db.addNew("root/post",keys,"key",myId,text,time,0,0);
     }
 
     public void upVote(int postId) {
