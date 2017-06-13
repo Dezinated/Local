@@ -10,6 +10,10 @@ public class Post {
     private int timestamp;
     private int rating;
 
+    public Post() {
+
+    }
+
     public Post(String text) {
         this.text = text;
     }
