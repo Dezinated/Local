@@ -8,3 +8,8 @@ makes it easy to switch from firebase to our own servers
 create layout for commenting
 
 create layout for report system
+
+add users section in database
+store last login for a user
+store amount of times user has been reported
+store points (amount of posts with upvotes, amount of votes)
