@@ -8,29 +8,6 @@
     tools:context="gorillasquad.local.MainActivity">
 
     <LinearLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/enterMessage"
-            android:inputType="text" />
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="buttonClicked"
-            android:text="@string/post" />
-
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -40,9 +17,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:dividerHeight="15dp"
+                android:headerDividersEnabled="false"
                 android:smoothScrollbar="true"
                 android:stackFromBottom="false"
                 tools:listitem="@layout/post" />
         </LinearLayout>
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

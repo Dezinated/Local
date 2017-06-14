@@ -9,9 +9,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -58,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
                     ListView yourListView = (ListView) findViewById(R.id.postList);
                     yourListView.setAdapter(ph.getPostAdapter());
 
+                    LayoutInflater myinflater = getLayoutInflater();
+                    ViewGroup myHeader = (ViewGroup)myinflater.inflate(R.layout.enter_message, yourListView, false);
+                    yourListView.addHeaderView(myHeader, null, false);
                 } else {
                     Log.w(TAG, "signInAnonymously:failure", task.getException());
                     Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
@@ -65,23 +72,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
-
-
-
-
-
-
-
     }
 
 
     public void buttonClicked(View v) {
-        Log.d(TAG,"button clicked");
-        ph.addPost("test");
+        int amount = 3;
+
+        v = (View) v.getParent();
+        EditText postText = (EditText) v.findViewById(R.id.newPost);
+        if(postText.getText().length() < amount) {
+            Toast.makeText(MainActivity.this, "Enter a message with more than "+amount+" characters.", Toast.LENGTH_SHORT).show();
+        }else {
+            ph.addPost(postText.getText().toString());
+        }
     }
 
     private Dialog getLoadingDialog(){
