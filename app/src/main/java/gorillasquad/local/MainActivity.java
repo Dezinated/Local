@@ -59,12 +59,12 @@ public class MainActivity extends AppCompatActivity {
                     ph = new PostHandler(myId,MainActivity.this);
 
 
-                    ListView yourListView = (ListView) findViewById(R.id.postList);
-                    yourListView.setAdapter(ph.getPostAdapter());
+                    ListView postList = (ListView) findViewById(R.id.postList);
+                    postList.setAdapter(ph.getPostAdapter());
 
                     LayoutInflater myinflater = getLayoutInflater();
-                    ViewGroup myHeader = (ViewGroup)myinflater.inflate(R.layout.enter_message, yourListView, false);
-                    yourListView.addHeaderView(myHeader, null, false);
+                    ViewGroup myHeader = (ViewGroup)myinflater.inflate(R.layout.enter_message, postList, false);
+                    postList.addHeaderView(myHeader, null, false);
                 } else {
                     Log.w(TAG, "signInAnonymously:failure", task.getException());
                     Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
