@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
                     LayoutInflater myinflater = getLayoutInflater();
                     ViewGroup myHeader = (ViewGroup)myinflater.inflate(R.layout.enter_message, postList, false);
-                    postList.addHeaderView(myHeader, null, false);
+                    postList.addHeaderView(myHeader, null, true);
                 } else {
                     Log.w(TAG, "signInAnonymously:failure", task.getException());
                     Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();

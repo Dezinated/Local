@@ -37,17 +37,39 @@ public class PostHandler {
         Log.d(TAG,"Adding new post");
 
         long time = System.currentTimeMillis();
-        Post p = new Post(myId,text,time,0,0);
+        Post p = new Post(myId,text,time,0,0,new String[]{},new String[]{});
         db.addNew("root/post",p.toMap(),true);
     }
 
     public void vote(String postId,boolean upVote) {
         for(Post p:posts) {
             if(p.getKey().equals(postId)){
-                if(upVote)
-                    p.setRating(p.getRating()+1);
-                else
-                    p.setRating(p.getRating()-1);
+                if(upVote) {
+                    Log.d(TAG,""+p.getUpVotes().contains(myId));
+                    if(p.getUpVotes().contains(myId)) { //if they press up again then remove their vote
+                        p.removeVote(myId);
+                        p.setRating(p.getRating() - 1);
+                    }else if(p.getDownVotes().contains(myId)) { //if they switch ratings
+                        p.removeVote(myId);
+                        p.setRating(p.getRating() + 2);
+                        p.addVote(upVote, myId);
+                    }else{ //first time they press the up button
+                        p.addVote(upVote, myId);
+                        p.setRating(p.getRating() + 1);
+                    }
+                }else {
+                    if(p.getDownVotes().contains(myId)) { //if they press down again then remove their vote
+                        p.removeVote(myId);
+                        p.setRating(p.getRating() + 1);
+                    }else if(p.getUpVotes().contains(myId)) { //if they switch ratings
+                        p.removeVote(myId);
+                        p.setRating(p.getRating() - 2);
+                        p.addVote(upVote, myId);
+                    }else { //first time they press the down button
+                        p.addVote(upVote, myId);
+                        p.setRating(p.getRating() - 1);
+                    }
+                }
                 db.update("root/post/"+p.getKey(),p.toMap());
             }
         }

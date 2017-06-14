@@ -1,6 +1,11 @@
 package gorillasquad.local;
 
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,17 +20,24 @@ public class Post {
     private long timestamp;
     private int rating;
     private int reports;
+    private List<String> upVotes;
+    private List<String> downVotes;
 
     public Post() {
-
+        upVotes = new ArrayList<>();
+        downVotes = new ArrayList<>();
     }
 
-    public Post(String author, String text, long timestamp, int rating, int reports) {
+    public Post(String author, String text, long timestamp, int rating, int reports, String[] upVotes, String[] downVotes) {
         this.author = author;
         this.text = text;
         this.timestamp = timestamp;
         this.rating = rating;
         this.reports = reports;
+        this.upVotes = new ArrayList<>();
+        this.downVotes = new ArrayList<>();
+        //this.upVotes = (ArrayList) Arrays.asList(upVotes);
+        //this.downVotes = (ArrayList) Arrays.asList(downVotes);
     }
 
     public Post(String text) {
@@ -42,17 +54,70 @@ public class Post {
 
     public void setRating(int rating) { this.rating = rating; }
 
+    public int getReports() {
+        return reports;
+    }
+
+    public void setReports(int reports) { this.reports = reports; }
+
     public String getKey() { return key; }
 
+    public int getTimestamp() {
+        return rating;
+    }
+
+    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
+
+    public String getAuthour() { return author; }
+
     public void setAuthor(String author) { this.author = author; }
+
+    public List<String> getUpVotes() { return upVotes; }
+
+    public void setUpVotes(List<String> upVotes) { this.upVotes = upVotes; }
+
+    public List<String> getDownVotes() { return downVotes; }
+
+    public void setDownVotes(List<String> downVotes) { this.downVotes = downVotes; }
+
+
+
+    public void addVote(boolean upVote, String id){
+        if(upVotes == null || downVotes == null)
+            return;
+        if(upVote)
+            upVotes.add(id);
+        else
+            downVotes.add(id);
+    }
+
+    public void removeVote(String id){
+        if(upVotes == null || downVotes == null)
+            return;
+
+        if(upVotes.contains(id)) {
+            Log.d("POST","Removing from upvotes");
+            upVotes.remove(upVotes.indexOf(id));
+        }
+        if(downVotes.contains(id)) {
+            Log.d("POST","Removing from downvotes");
+            downVotes.remove(downVotes.indexOf(id));
+        }
+    }
 
     public Map<String, Object> toMap(){
         HashMap<String,Object> map = new HashMap<>();
         map.put("text",text);
-        map.put("author",author);
+        if(author != null) {
+            if(!author.equals("")) { //incase it is null putting this on a new line wont throw nullexception
+                map.put("author", author);
+            }
+        }
         map.put("timestamp",timestamp);
         map.put("rating",rating);
         map.put("reports",reports);
+        map.put("upVotes",upVotes);
+        map.put("downVotes",downVotes);
         return map;
     }
 }
