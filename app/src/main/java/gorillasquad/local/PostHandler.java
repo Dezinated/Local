@@ -45,6 +45,8 @@ public class PostHandler {
 
     public Nature[] icons = {Nature.DOG_FACE, Nature.CAT_FACE, Nature.MOUSE_FACE, Nature.HAMSTER_FACE, Nature.RABBIT_FACE};
 
+    public String[] colours = {"00FF00"};
+
     public int getHash(String id, String postId) {
         return id.hashCode() + postId.hashCode();
     }
