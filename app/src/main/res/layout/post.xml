@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
     android:background="@drawable/post_background"
-    android:minHeight="200dp"
-    android:orientation="vertical"
-    android:padding="15dp">
+    android:minHeight="150dp"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/postSectionOne"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -19,14 +20,25 @@
             android:id="@+id/postText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:padding="10dp" />
 
         <LinearLayout
             android:id="@+id/postRatings"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp">
+
+            <ImageButton
+                android:id="@+id/upVoteButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#00ffffff"
+                app:srcCompat="@drawable/up_arrow" />
 
             <TextView
                 android:id="@+id/rating"
@@ -36,20 +48,12 @@
                 android:gravity="center" />
 
             <ImageButton
-                android:id="@+id/upVoteButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/upVote"
-                app:srcCompat="@android:drawable/arrow_up_float" />
-
-            <ImageButton
                 android:id="@+id/downVoteButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:contentDescription="@string/downVote"
-                app:srcCompat="@android:drawable/arrow_down_float" />
+                android:background="#00ffffff"
+                app:srcCompat="@drawable/down_arrow" />
 
         </LinearLayout>
 
@@ -58,8 +62,8 @@
     <LinearLayout
         android:id="@+id/postSectionTwo"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:orientation="horizontal">
 
         <Button

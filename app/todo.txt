@@ -7,6 +7,7 @@
 -remove uploading of icons and colour, calc it client side based off ownerHash
 -design can be improved
 --new arrows
+--highlight arrow after vote
 
 DONE:
 -find and fix comment order bug

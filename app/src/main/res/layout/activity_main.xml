@@ -12,14 +12,17 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ListView
-                android:id="@+id/postList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:dividerHeight="15dp"
-                android:headerDividersEnabled="false"
-                android:smoothScrollbar="true"
-                android:stackFromBottom="false"
-                tools:listitem="@layout/post" />
+        <ListView
+            android:id="@+id/postList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:divider="@color/colorAccent"
+            android:dividerHeight="15dp"
+            android:headerDividersEnabled="false"
+            android:smoothScrollbar="true"
+            android:stackFromBottom="false"
+            tools:listitem="@layout/post" />
         </LinearLayout>
 </android.support.constraint.ConstraintLayout>

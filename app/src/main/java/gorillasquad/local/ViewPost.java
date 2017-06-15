@@ -84,7 +84,7 @@ public class ViewPost extends AppCompatActivity {
             Log.d(TAG,postId);
             int hash = ph.getHash(myId,postId);
             if(hash == ownerHash)
-                ph.addPost(postText.getText().toString(),"comments/"+postId+"/","OP","#666699",hash);
+                ph.addPost(postText.getText().toString(),"comments/"+postId+"/","OP","#9900cc",hash);
             else
                 ph.addPost(postText.getText().toString(),"comments/"+postId+"/",hash);
         }
