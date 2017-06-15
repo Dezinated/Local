@@ -1,14 +1,12 @@
-create a hash function which takes in author id and timestamp to create a value unique to that author id
-the purpose of this function is so that when uploading a comment you dont need to include your author id
-this hash represents the users auth for that specific post
+-find and fix comment order bug
+-add post info to view post
+-clear textbox on post
+-voting on comments
+-create layout for report system
+-add functionality for report system
+-add icon for OP
 
-create a back end database that can be used with sql
-makes it easy to switch from firebase to our own servers
-
-create layout for commenting
-
-create layout for report system
-
+LATER:
 add users section in database
 store last login for a user
 store amount of times user has been reported
