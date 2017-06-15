@@ -2,6 +2,8 @@ package gorillasquad.local;
 
 import android.util.Log;
 
+import com.google.firebase.database.ServerValue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,7 +19,7 @@ public class Post {
     private String key;
     private String text;
     private String author;
-    private int timestamp;
+    private long timestamp;
     private int rating;
     private int reports;
     private List<String> upVotes;
@@ -30,7 +32,7 @@ public class Post {
         downVotes = new ArrayList<>();
     }
 
-    public Post(String author, String text, int timestamp, int rating, int reports,String icon,String colour) {
+    public Post(String author, String text, long timestamp, int rating, int reports,String icon,String colour) {
         this.author = author;
         this.text = text;
         this.timestamp = timestamp;
@@ -64,11 +66,11 @@ public class Post {
 
     public String getKey() { return key; }
 
-    public int getTimestamp() {
-        return rating;
+    public long getTimestamp() {
+        return timestamp;
     }
 
-    public void setTimestamp(int timestamp) { this.timestamp = timestamp; }
+    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
 
     public String getAuthour() { return author; }
 
@@ -113,17 +115,21 @@ public class Post {
         }
     }
 
-    public Map<String, Object> toMap(){
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("text",text);
-        if(author != null) {
-            if(!author.equals("")) { //incase it is null putting this on a new line wont throw nullexception
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("text", text);
+        if (author != null) {
+            if (!author.equals("")) { //incase it is null putting this on a new line wont throw nullexception
                 map.put("author", author);
             }
         }
         map.put("icon", icon);
         map.put("colour", colour);
-        map.put("timestamp",timestamp);
+        if (timestamp == 0){
+            map.put("timestamp", ServerValue.TIMESTAMP);
+        }else{
+            map.put("timestamp", timestamp);
+        }
         map.put("rating",rating);
         map.put("reports",reports);
         map.put("upVotes",upVotes);
