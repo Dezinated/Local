@@ -1,6 +1,7 @@
 package gorillasquad.local;
 
 import android.content.Context;
+import android.text.format.Time;
 import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
@@ -62,7 +63,7 @@ public class PostHandler {
     public void addPost(String text,String location,int hash) {
         Log.d(TAG,"Adding new post");
 
-        long time = System.currentTimeMillis();
+        int time = (int) (System.currentTimeMillis() / 1000L);
         Post p = new Post(myId,text,time,0,0,iconFromHash(hash),colourFromHash(hash));
         db.addNew("root/"+location,p.toMap());
     }

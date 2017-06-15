@@ -17,7 +17,7 @@ public class Post {
     private String key;
     private String text;
     private String author;
-    private long timestamp;
+    private int timestamp;
     private int rating;
     private int reports;
     private List<String> upVotes;
@@ -30,7 +30,7 @@ public class Post {
         downVotes = new ArrayList<>();
     }
 
-    public Post(String author, String text, long timestamp, int rating, int reports,String icon,String colour) {
+    public Post(String author, String text, int timestamp, int rating, int reports,String icon,String colour) {
         this.author = author;
         this.text = text;
         this.timestamp = timestamp;
@@ -68,7 +68,7 @@ public class Post {
         return rating;
     }
 
-    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
+    public void setTimestamp(int timestamp) { this.timestamp = timestamp; }
 
     public String getAuthour() { return author; }
 
