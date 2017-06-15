@@ -44,7 +44,6 @@ public class CommentAdapter extends ArrayAdapter<Post> {
 
         int colour = 0;
         if(p.getColour() != null){
-            Log.d("commentadapter",p.getColour());
             colour = Color.parseColor(p.getColour());
         }
         Drawable authorIcon = getContext().getResources().getDrawable(R.drawable.author_icon);

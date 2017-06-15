@@ -63,8 +63,8 @@ public class CommentHandler {
         @Override
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
             Post post;
-
-            Log.d(TAG,"change: " + this);
+/*
+            Log.d(TAG,"change: " + dataSnapshot.toString());
             for(Post p:comments) {
                 for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
                     post = messageSnapshot.getValue(Post.class);
@@ -76,7 +76,7 @@ public class CommentHandler {
                 Log.d(TAG,"Text: " + p.getKey());
 
             }
-
+*/
             ca.notifyDataSetChanged();
         }
 

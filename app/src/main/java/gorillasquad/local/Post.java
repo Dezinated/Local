@@ -44,53 +44,85 @@ public class Post {
         this.colour = colour;
     }
 
-    public Post(String text) {
-        this.text = text;
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getText() {
         return text;
     }
 
-    public int getRating() {
-        return rating;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public void setRating(int rating) { this.rating = rating; }
-
-    public int getReports() {
-        return reports;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setReports(int reports) { this.reports = reports; }
-
-    public String getKey() { return key; }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
     public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
 
-    public String getAuthour() { return author; }
+    public int getRating() {
+        return rating;
+    }
 
-    public void setAuthor(String author) { this.author = author; }
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
 
-    public String getIcon() { return icon; }
+    public int getReports() {
+        return reports;
+    }
 
-    public void setIcon(String icon) { this.icon = icon; }
+    public void setReports(int reports) {
+        this.reports = reports;
+    }
 
-    public List<String> getUpVotes() { return upVotes; }
+    public List<String> getUpVotes() {
+        return upVotes;
+    }
 
-    public void setUpVotes(List<String> upVotes) { this.upVotes = upVotes; }
+    public void setUpVotes(List<String> upVotes) {
+        this.upVotes = upVotes;
+    }
 
-    public List<String> getDownVotes() { return downVotes; }
+    public List<String> getDownVotes() {
+        return downVotes;
+    }
 
-    public void setDownVotes(List<String> downVotes) { this.downVotes = downVotes; }
+    public void setDownVotes(List<String> downVotes) {
+        this.downVotes = downVotes;
+    }
 
-    public String getColour() { return colour; }
+    public String getIcon() {
+        return icon;
+    }
 
-    public void setColour(String colour) { this.colour = colour; }
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
 
     public void addVote(boolean upVote, String id){
         if(upVotes == null || downVotes == null)
@@ -115,19 +147,19 @@ public class Post {
         }
     }
 
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("text", text);
-        if (author != null) {
-            if (!author.equals("")) { //incase it is null putting this on a new line wont throw nullexception
+    public Map<String, Object> toMap(){
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("text",text);
+        if(author != null) {
+            if(!author.equals("")) { //incase it is null putting this on a new line wont throw nullexception
                 map.put("author", author);
             }
         }
         map.put("icon", icon);
         map.put("colour", colour);
-        if (timestamp == 0){
+        if(timestamp == 0){
             map.put("timestamp", ServerValue.TIMESTAMP);
-        }else{
+        }else {
             map.put("timestamp", timestamp);
         }
         map.put("rating",rating);
