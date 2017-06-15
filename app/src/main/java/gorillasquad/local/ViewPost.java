@@ -78,7 +78,8 @@ public class ViewPost extends AppCompatActivity {
         if(postText.getText().length() < amount) {
             Toast.makeText(this, "Enter a message with more than "+amount+" characters.", Toast.LENGTH_SHORT).show();
         }else {
-            ph.addPost(postText.getText().toString(),"comments/"+postId+"/");
+
+            ph.addPost(postText.getText().toString(),"comments/"+postId+"/",ph.getHash(myId,postId));
         }
     }
 }

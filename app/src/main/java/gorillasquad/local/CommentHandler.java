@@ -56,7 +56,7 @@ public class CommentHandler {
             Log.d(TAG,"added: " + dataSnapshot.toString());
 
             Post post = dataSnapshot.getValue(Post.class);
-            comments.add(0,post);
+            comments.add(post);
             ca.notifyDataSetChanged();
         }
 

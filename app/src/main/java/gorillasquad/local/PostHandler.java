@@ -11,6 +11,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import gorillasquad.local.emojis.Nature;
+
 import static android.content.ContentValues.TAG;
 
 /**
@@ -41,11 +43,21 @@ public class PostHandler {
         return ch;
     }
 
-    public void addPost(String text,String location) {
+    public Nature[] icons = {Nature.DOG_FACE, Nature.CAT_FACE, Nature.MOUSE_FACE, Nature.HAMSTER_FACE, Nature.RABBIT_FACE};
+
+    public int getHash(String id, String postId) {
+        return id.hashCode() + postId.hashCode();
+    }
+
+    public String iconFromHash(int hash) {
+        return icons[hash % icons.length].toString();
+    }
+
+    public void addPost(String text,String location,int hash) {
         Log.d(TAG,"Adding new post");
 
         long time = System.currentTimeMillis();
-        Post p = new Post(myId,text,time,0,0);
+        Post p = new Post(myId,text,time,0,0,iconFromHash(hash));
         db.addNew("root/"+location,p.toMap());
     }
 

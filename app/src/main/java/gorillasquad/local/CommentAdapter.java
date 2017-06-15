@@ -38,6 +38,30 @@ public class CommentAdapter extends ArrayAdapter<Post> {
 
         final Post p = getItem(position);
 
+        TextView postText = (TextView) v.findViewById(R.id.postText);
+        TextView rating = (TextView) v.findViewById(R.id.rating);
+        TextView commentIcon = (TextView) v.findViewById(R.id.commentIcon);
+
+        postText.setText(p.getText());
+        rating.setText(p.getRating()+"");
+        commentIcon.setText(p.getIcon());
+
+        ImageButton upVoteButton = (ImageButton) v.findViewById(R.id.upVoteButton);
+        ImageButton downVoteButton = (ImageButton) v.findViewById(R.id.downVoteButton);
+
+        upVoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ph.vote(p.getKey(),true);
+            }
+        });
+        downVoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ph.vote(p.getKey(),false);
+            }
+        });
+
         return v;
     }
 }
