@@ -26,15 +26,17 @@ public class Post {
     private List<String> downVotes;
     private String icon;
     private String colour;
+    private int ownerHash;
 
     public Post() {
         upVotes = new ArrayList<>();
         downVotes = new ArrayList<>();
     }
 
-    public Post(String author, String text, long timestamp, int rating, int reports,String icon,String colour) {
+    public Post(String author, String text, String key, long timestamp, int rating, int reports,String icon,String colour,int ownerHash) {
         this.author = author;
         this.text = text;
+        this.key = key;
         this.timestamp = timestamp;
         this.rating = rating;
         this.reports = reports;
@@ -42,11 +44,16 @@ public class Post {
         this.downVotes = new ArrayList<>();
         this.icon = icon;
         this.colour = colour;
+        this.ownerHash = ownerHash;
     }
 
     public String getKey() {
         return key;
     }
+
+    public void setOwnerHash(int ownerHash) { this.ownerHash = ownerHash; }
+
+    public int getOwnerHash() { return ownerHash; }
 
     public void setKey(String key) {
         this.key = key;
@@ -163,6 +170,8 @@ public class Post {
             map.put("timestamp", timestamp);
         }
         map.put("rating",rating);
+        map.put("key",key);
+        map.put("ownerHash",ownerHash);
         map.put("reports",reports);
         map.put("upVotes",upVotes);
         map.put("downVotes",downVotes);

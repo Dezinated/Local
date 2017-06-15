@@ -36,6 +36,8 @@ public class CommentHandler {
         //db.getRef("comments/"+mainPostId).orderByChild("timestamp").addChildEventListener(commentListener);
     }
 
+    public String getMainPostId() { return mainPostId; }
+
     public ArrayList<Post> getComments() {
         return comments;
     }

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 public class PostAdapter extends ArrayAdapter<Post> {
 
+    private String TAG = "PostAdapter";
     private MainPostHandler mph;
     private PostHandler ph;
 
@@ -56,13 +57,13 @@ public class PostAdapter extends ArrayAdapter<Post> {
         upVoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ph.vote(p.getKey(),true);
+                ph.votePost(p,true);
             }
         });
         downVoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ph.vote(p.getKey(),false);
+                ph.votePost(p,false);
             }
         });
 
@@ -77,7 +78,9 @@ public class PostAdapter extends ArrayAdapter<Post> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ViewPost.class);
+                Log.d(TAG,p.getKey());
                 intent.putExtra("postId",p.getKey());
+                intent.putExtra("ownerHash",p.getOwnerHash());
                 getContext().startActivity(intent);
             }
         });

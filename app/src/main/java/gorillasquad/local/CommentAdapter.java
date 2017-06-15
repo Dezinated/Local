@@ -64,13 +64,13 @@ public class CommentAdapter extends ArrayAdapter<Post> {
         upVoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ph.vote(p.getKey(),true);
+                ph.voteComment(p.getKey(),true);
             }
         });
         downVoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ph.vote(p.getKey(),false);
+                ph.voteComment(p.getKey(),false);
             }
         });
 

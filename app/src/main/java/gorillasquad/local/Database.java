@@ -26,12 +26,17 @@ public class Database {
         return instance;
     }
 
-    public void addNew(String location,Map<String,Object> values){
+    public String addNew(String location){
+        Map<String,Object> values = new HashMap<>();
         DatabaseReference db = database.getReference(location);
         DatabaseReference newAddition = db.push();
 
-        values.put("key", newAddition.getKey().toString());
-        newAddition.setValue(values);
+        return newAddition.getKey().toString();
+    }
+
+    public void set(String location,Map<String,Object> values) {
+        DatabaseReference db = database.getReference(location);
+        db.setValue(values);
     }
 
     public void update(String location,Map<String,Object> values) {

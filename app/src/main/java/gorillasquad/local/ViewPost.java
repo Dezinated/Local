@@ -29,6 +29,7 @@ public class ViewPost extends AppCompatActivity {
     private String TAG = "ViewPost";
 
     private String postId;
+    private int ownerHash;
     private PostHandler ph;
     private String myId;
 
@@ -56,6 +57,7 @@ public class ViewPost extends AppCompatActivity {
         commentList.addFooterView(footer, null, false);
 
         postId = getIntent().getStringExtra("postId");
+        ownerHash = getIntent().getIntExtra("ownerHash",0);
 
         ph.getCh().setPostId(postId);
         commentList.setAdapter(ph.getCh().getCommentAdapter());
@@ -78,8 +80,13 @@ public class ViewPost extends AppCompatActivity {
         if(postText.getText().length() < amount) {
             Toast.makeText(this, "Enter a message with more than "+amount+" characters.", Toast.LENGTH_SHORT).show();
         }else {
-
-            ph.addPost(postText.getText().toString(),"comments/"+postId+"/",ph.getHash(myId,postId));
+            Log.d(TAG,myId);
+            Log.d(TAG,postId);
+            int hash = ph.getHash(myId,postId);
+            if(hash == ownerHash)
+                ph.addPost(postText.getText().toString(),"comments/"+postId+"/","OP","#666699",hash);
+            else
+                ph.addPost(postText.getText().toString(),"comments/"+postId+"/",hash);
         }
     }
 }

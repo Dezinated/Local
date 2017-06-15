@@ -17,6 +17,7 @@ import static android.content.ContentValues.TAG;
 
 public class MainPostHandler {
 
+    private String TAG = "MainPostHandler";
     private Database db;
     private String myId;
     private ArrayList<Post> posts;
@@ -44,7 +45,7 @@ public class MainPostHandler {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             Post post = dataSnapshot.getValue(Post.class);
-            Log.d(TAG,"Text: " + dataSnapshot.toString());
+
             posts.add(0,post);
             pa.notifyDataSetChanged();
         }
@@ -52,10 +53,7 @@ public class MainPostHandler {
         @Override
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
             Post post = dataSnapshot.getValue(Post.class);
-            Log.d(TAG,"Text: " + dataSnapshot.toString());
-            Log.d(TAG,"Text: " + post.getKey());
             for(Post p:posts) {
-                Log.d(TAG,"Text: " + p.getKey());
                 if(p.getKey().equals(post.getKey())){
                     posts.set(posts.indexOf(p),post);
                 }

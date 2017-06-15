@@ -1,16 +1,17 @@
 -add post info to view post
 -clear textbox on post
--voting on comments
 -create layout for report system
 -add functionality for report system
--add icon for OP
 -scroll to bottom when new comment is added
 -keyboard should allow emoji input
+-remove uploading of icons and colour, calc it client side based off ownerHash
 -design can be improved
 --new arrows
 
 DONE:
 -find and fix comment order bug
+-voting on comments
+-add icon for OP
 
 LATER:
 add users section in database

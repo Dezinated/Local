@@ -49,7 +49,8 @@ public class PostHandler {
     public String[] colours = {"#0074D9", "#FF851B", "#01FF70", "#85144b", "#468499", "#800080","#daa520"};
 
     public int getHash(String id, String postId) {
-        return Math.abs(id.hashCode() + postId.hashCode());
+        return Math.abs(id.hashCode()
+                + postId.hashCode());
     }
 
     public String iconFromHash(int hash) {
@@ -62,46 +63,65 @@ public class PostHandler {
 
     public void addPost(String text,String location,int hash) {
         Log.d(TAG,"Adding new post");
+        addPost(text,location,iconFromHash(hash),colourFromHash(hash),hash);
+    }
 
-        Post p = new Post(myId,text,0,0,0,iconFromHash(hash),colourFromHash(hash));
-        db.addNew("root/"+location,p.toMap());
+    public void addPost(String text, String location, String icon, String colour,int hash){
+        String key = db.addNew("root/"+location);
+        if(hash == 0){
+            hash = getHash(myId,key);
+        }
+        Post p = new Post(myId,text,key,0,0,0,icon,colour,hash);
+        Log.d(TAG,p.getKey());
+        db.set("root/"+location+"/"+key,p.toMap());
     }
 
 
-    public void vote(String postId,boolean upVote) {
 
-        Log.d(TAG,"Vote");
-        for(Post p:mph.getPosts()) {
-            if(p.getKey().equals(postId)){
-                if(upVote) {
-                    Log.d(TAG,""+p.getUpVotes().contains(myId));
-                    if(p.getUpVotes().contains(myId)) { //if they press up again then remove their vote
-                        p.removeVote(myId);
-                        p.setRating(p.getRating() - 1);
-                    }else if(p.getDownVotes().contains(myId)) { //if they switch ratings
-                        p.removeVote(myId);
-                        p.setRating(p.getRating() + 2);
-                        p.addVote(upVote, myId);
-                    }else{ //first time they press the up button
-                        p.addVote(upVote, myId);
-                        p.setRating(p.getRating() + 1);
-                    }
-                }else {
-                    if(p.getDownVotes().contains(myId)) { //if they press down again then remove their vote
-                        p.removeVote(myId);
-                        p.setRating(p.getRating() + 1);
-                    }else if(p.getUpVotes().contains(myId)) { //if they switch ratings
-                        p.removeVote(myId);
-                        p.setRating(p.getRating() - 2);
-                        p.addVote(upVote, myId);
-                    }else { //first time they press the down button
-                        p.addVote(upVote, myId);
-                        p.setRating(p.getRating() - 1);
-                    }
-                }
-                db.update("root/post/"+p.getKey(),p.toMap());
+    public void voteComment(String postId, boolean upVote){
+        for(Post p:ch.getComments()) {
+            if (p.getKey().equals(postId)) {
+                vote(p,upVote);
+                db.update("root/comments/"+ch.getMainPostId()+"/"+p.getKey(),p.toMap());
             }
         }
+    }
+
+    public void votePost(Post p, boolean upVote){
+        vote(p,upVote);
+        db.update("root/post/"+p.getKey(),p.toMap());
+    }
+
+    public void vote(Post p,boolean upVote) {
+
+        Log.d(TAG,"Vote");
+        if(upVote) {
+            if(p.getUpVotes().contains(myId)) { //if they press up again then remove their vote
+                p.removeVote(myId);
+                p.setRating(p.getRating() - 1);
+            }else if(p.getDownVotes().contains(myId)) { //if they switch ratings
+                p.removeVote(myId);
+                p.setRating(p.getRating() + 2);
+                p.addVote(upVote, myId);
+            }else{ //first time they press the up button
+                p.addVote(upVote, myId);
+                p.setRating(p.getRating() + 1);
+            }
+        }else {
+            if (p.getDownVotes().contains(myId)) { //if they press down again then remove their vote
+                p.removeVote(myId);
+                p.setRating(p.getRating() + 1);
+            } else if (p.getUpVotes().contains(myId)) { //if they switch ratings
+                p.removeVote(myId);
+                p.setRating(p.getRating() - 2);
+                p.addVote(upVote, myId);
+            } else { //first time they press the down button
+                p.addVote(upVote, myId);
+                p.setRating(p.getRating() - 1);
+            }
+        }
+
+
     }
 
     public void report(int id, String text) {
