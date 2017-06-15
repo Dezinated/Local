@@ -7,9 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.w3c.dom.Comment;
 
@@ -23,16 +28,14 @@ public class ViewPost extends AppCompatActivity {
 
     private String TAG = "ViewPost";
 
-    private Post p;
-    private CommentAdapter ca;
+    private String postId;
+    private PostHandler ph;
+    private String myId;
 
     public ViewPost() {
 
     }
 
-    public ViewPost(Post p) {
-        this.p = p;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,20 +44,21 @@ public class ViewPost extends AppCompatActivity {
         setTitle("");
         Log.d(TAG,"Created view post");
 
-        ListView postList = (ListView) findViewById(R.id.commentsList);
+        myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        ph = new PostHandler(myId,this);
+
+        ListView commentList = (ListView) findViewById(R.id.commentsList);
 
         LayoutInflater myinflater = getLayoutInflater();
-        ViewGroup header = (ViewGroup)myinflater.inflate(R.layout.view_post, postList, false);
-        ViewGroup footer = (ViewGroup)myinflater.inflate(R.layout.enter_message, postList, false);
-        postList.addHeaderView(header, null, false);
-        postList.addFooterView(footer, null, false);
+        ViewGroup header = (ViewGroup)myinflater.inflate(R.layout.view_post, commentList, false);
+        ViewGroup footer = (ViewGroup)myinflater.inflate(R.layout.enter_message, commentList, false);
+        commentList.addHeaderView(header, null, false);
+        commentList.addFooterView(footer, null, false);
 
-        ArrayList<Post> comments = new ArrayList<>();
-        comments.add(new Post());
-        ca = new CommentAdapter(this,comments);
+        postId = getIntent().getStringExtra("postId");
 
-        postList.setAdapter(ca);
-        ca.notifyDataSetChanged();
+        ph.getCh().setPostId(postId);
+        commentList.setAdapter(ph.getCh().getCommentAdapter());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -64,5 +68,17 @@ public class ViewPost extends AppCompatActivity {
         startActivityForResult(myIntent, 0);
         return true;
 
+    }
+
+    public void buttonClicked(View v) {
+        int amount = 3;
+
+        v = (View) v.getParent();
+        EditText postText = (EditText) v.findViewById(R.id.newPost);
+        if(postText.getText().length() < amount) {
+            Toast.makeText(this, "Enter a message with more than "+amount+" characters.", Toast.LENGTH_SHORT).show();
+        }else {
+            ph.addPost(postText.getText().toString(),"comments/"+postId+"/");
+        }
     }
 }

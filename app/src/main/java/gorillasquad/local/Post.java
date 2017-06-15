@@ -28,7 +28,7 @@ public class Post {
         downVotes = new ArrayList<>();
     }
 
-    public Post(String author, String text, long timestamp, int rating, int reports, String[] upVotes, String[] downVotes) {
+    public Post(String author, String text, long timestamp, int rating, int reports) {
         this.author = author;
         this.text = text;
         this.timestamp = timestamp;

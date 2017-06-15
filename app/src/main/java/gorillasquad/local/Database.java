@@ -26,13 +26,11 @@ public class Database {
         return instance;
     }
 
-    public void addNew(String location,Map<String,Object> values,boolean addKey){
+    public void addNew(String location,Map<String,Object> values){
         DatabaseReference db = database.getReference(location);
-
         DatabaseReference newAddition = db.push();
-        if(addKey) {
-            values.put("key", newAddition.getKey().toString());
-        }
+
+        values.put("key", newAddition.getKey().toString());
         newAddition.setValue(values);
     }
 
@@ -46,8 +44,8 @@ public class Database {
 
     }
 
-    public DatabaseReference getPostsRef(){
-        return database.getReference("root/post");
+    public DatabaseReference getRef(String location){
+        return database.getReference("root/"+location);
     }
 
 }

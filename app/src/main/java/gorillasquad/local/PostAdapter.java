@@ -19,14 +19,16 @@ import java.util.ArrayList;
 
 public class PostAdapter extends ArrayAdapter<Post> {
 
+    private MainPostHandler mph;
     private PostHandler ph;
 
     public PostAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
     }
 
-    public PostAdapter(Context context, ArrayList<Post> items, PostHandler ph) {
+    public PostAdapter(Context context, ArrayList<Post> items,PostHandler ph) {
         super(context, R.layout.post, items);
+        this.mph = mph;
         this.ph = ph;
     }
 
@@ -75,6 +77,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ViewPost.class);
+                intent.putExtra("postId",p.getKey());
                 getContext().startActivity(intent);
             }
         });

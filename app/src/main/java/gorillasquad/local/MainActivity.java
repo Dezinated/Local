@@ -58,9 +58,8 @@ public class MainActivity extends AppCompatActivity {
                     myId = mAuth.getCurrentUser().getUid();
                     ph = new PostHandler(myId,MainActivity.this);
 
-
                     ListView postList = (ListView) findViewById(R.id.postList);
-                    postList.setAdapter(ph.getPostAdapter());
+                    postList.setAdapter(ph.getMph().getPostAdapter());
 
                     LayoutInflater myinflater = getLayoutInflater();
                     ViewGroup myHeader = (ViewGroup)myinflater.inflate(R.layout.enter_message, postList, false);
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         if(postText.getText().length() < amount) {
             Toast.makeText(MainActivity.this, "Enter a message with more than "+amount+" characters.", Toast.LENGTH_SHORT).show();
         }else {
-            ph.addPost(postText.getText().toString());
+            ph.addPost(postText.getText().toString(),"post");
         }
     }
 

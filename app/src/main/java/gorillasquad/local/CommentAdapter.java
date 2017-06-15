@@ -18,12 +18,15 @@ import java.util.ArrayList;
 
 public class CommentAdapter extends ArrayAdapter<Post> {
 
+    private PostHandler ph;
+
     public CommentAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
     }
 
-    public CommentAdapter(Context context, ArrayList<Post> items) {
+    public CommentAdapter(Context context, ArrayList<Post> items,PostHandler ph) {
         super(context, R.layout.post, items);
+        this.ph = ph;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
