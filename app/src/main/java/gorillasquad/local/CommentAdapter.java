@@ -2,6 +2,10 @@ package gorillasquad.local;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +39,16 @@ public class CommentAdapter extends ArrayAdapter<Post> {
         LayoutInflater vi;
         vi = LayoutInflater.from(getContext());
         v = vi.inflate(R.layout.comment,null);
-
         final Post p = getItem(position);
+
+
+        int colour = 0;
+        if(p.getColour() != null){
+            Log.d("commentadapter",p.getColour());
+            colour = Color.parseColor(p.getColour());
+        }
+        Drawable authorIcon = getContext().getResources().getDrawable(R.drawable.author_icon);
+        authorIcon.mutate().setColorFilter(colour, PorterDuff.Mode.MULTIPLY );
 
         TextView postText = (TextView) v.findViewById(R.id.postText);
         TextView rating = (TextView) v.findViewById(R.id.rating);
@@ -45,6 +57,7 @@ public class CommentAdapter extends ArrayAdapter<Post> {
         postText.setText(p.getText());
         rating.setText(p.getRating()+"");
         commentIcon.setText(p.getIcon());
+        commentIcon.setBackgroundDrawable(authorIcon);
 
         ImageButton upVoteButton = (ImageButton) v.findViewById(R.id.upVoteButton);
         ImageButton downVoteButton = (ImageButton) v.findViewById(R.id.downVoteButton);

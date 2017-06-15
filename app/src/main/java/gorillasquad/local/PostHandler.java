@@ -43,23 +43,27 @@ public class PostHandler {
         return ch;
     }
 
-    public Nature[] icons = {Nature.DOG_FACE, Nature.CAT_FACE, Nature.MOUSE_FACE, Nature.HAMSTER_FACE, Nature.RABBIT_FACE};
+    public Nature[] icons = {Nature.DOG_FACE, Nature.CAT_FACE, Nature.MOUSE_FACE, Nature.HAMSTER_FACE, Nature.RABBIT_FACE, Nature.MONKEY_FACE, Nature.KOALA_FACE};
 
-    public String[] colours = {"00FF00"};
+    public String[] colours = {"#0074D9", "#FF851B", "#01FF70", "#85144b", "#468499", "#800080"," #daa520"};
 
     public int getHash(String id, String postId) {
-        return id.hashCode() + postId.hashCode();
+        return Math.abs(id.hashCode() + postId.hashCode());
     }
 
     public String iconFromHash(int hash) {
         return icons[hash % icons.length].toString();
     }
 
+    public String colourFromHash(int hash) {
+        return colours[hash % colours.length];
+    }
+
     public void addPost(String text,String location,int hash) {
         Log.d(TAG,"Adding new post");
 
         long time = System.currentTimeMillis();
-        Post p = new Post(myId,text,time,0,0,iconFromHash(hash));
+        Post p = new Post(myId,text,time,0,0,iconFromHash(hash),colourFromHash(hash));
         db.addNew("root/"+location,p.toMap());
     }
 

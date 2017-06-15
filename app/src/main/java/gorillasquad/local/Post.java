@@ -23,13 +23,14 @@ public class Post {
     private List<String> upVotes;
     private List<String> downVotes;
     private String icon;
+    private String colour;
 
     public Post() {
         upVotes = new ArrayList<>();
         downVotes = new ArrayList<>();
     }
 
-    public Post(String author, String text, long timestamp, int rating, int reports,String icon) {
+    public Post(String author, String text, long timestamp, int rating, int reports,String icon,String colour) {
         this.author = author;
         this.text = text;
         this.timestamp = timestamp;
@@ -38,8 +39,7 @@ public class Post {
         this.upVotes = new ArrayList<>();
         this.downVotes = new ArrayList<>();
         this.icon = icon;
-        //this.upVotes = (ArrayList) Arrays.asList(upVotes);
-        //this.downVotes = (ArrayList) Arrays.asList(downVotes);
+        this.colour = colour;
     }
 
     public Post(String text) {
@@ -86,7 +86,9 @@ public class Post {
 
     public void setDownVotes(List<String> downVotes) { this.downVotes = downVotes; }
 
+    public String getColour() { return colour; }
 
+    public void setColour(String colour) { this.colour = colour; }
 
     public void addVote(boolean upVote, String id){
         if(upVotes == null || downVotes == null)
@@ -120,6 +122,7 @@ public class Post {
             }
         }
         map.put("icon", icon);
+        map.put("colour", colour);
         map.put("timestamp",timestamp);
         map.put("rating",rating);
         map.put("reports",reports);
