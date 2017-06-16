@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Enter a message with more than "+amount+" characters.", Toast.LENGTH_SHORT).show();
         }else {
             ph.addPost(postText.getText().toString(),"post",0);
+            postText.setText("");
         }
     }
 

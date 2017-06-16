@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/enterMessage"
-        android:inputType="text" />
+        android:inputType="textShortMessage" />
 
     <Button
         android:id="@+id/newPostButton"

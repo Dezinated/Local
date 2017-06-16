@@ -35,6 +35,7 @@ public class ViewPost extends AppCompatActivity {
     private PostHandler ph;
     private String myId;
     private Post p;
+    private ListView commentList;
 
     public ViewPost() {
 
@@ -53,7 +54,7 @@ public class ViewPost extends AppCompatActivity {
         myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         ph = new PostHandler(myId,this, p);
 
-        ListView commentList = (ListView) findViewById(R.id.commentsList);
+        commentList = (ListView) findViewById(R.id.commentsList);
 
         LayoutInflater myinflater = getLayoutInflater();
         ViewGroup header = (ViewGroup)myinflater.inflate(R.layout.view_post, commentList, false);
@@ -133,6 +134,8 @@ public class ViewPost extends AppCompatActivity {
         }else {
             int hash = ph.getHash(myId,p.getKey());
             ph.addPost(postText.getText().toString(),"comments/"+p.getKey()+"/",hash);
+            postText.setText("");
+            commentList.setSelection(ph.getCh().getCommentAdapter().getCount() - 1);
         }
     }
 }

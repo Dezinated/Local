@@ -1,10 +1,5 @@
--clear textbox on post
 -create layout for report system
 -add functionality for report system
--scroll to bottom when new comment is added
--keyboard should allow emoji input
--timestamps
--add more colours and icons
 
 DONE:
 -find and fix comment order bug
@@ -14,6 +9,11 @@ DONE:
 -new arrows
 -highlight arrow after vote
 -remove uploading of icons and colour, calc it client side based off ownerHash
+-timestamps
+-add more colours and icons
+-clear textbox on post
+-keyboard should allow emoji input
+-scroll to bottom when new comment is added
 
 LATER:
 add users section in database

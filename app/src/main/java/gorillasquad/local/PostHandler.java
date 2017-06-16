@@ -52,9 +52,9 @@ public class PostHandler {
         return ch;
     }
 
-    public Nature[] icons = {Nature.DOG_FACE, Nature.CAT_FACE, Nature.MOUSE_FACE, Nature.HAMSTER_FACE, Nature.RABBIT_FACE, Nature.MONKEY_FACE, Nature.KOALA_FACE};
+    public Nature[] icons = {Nature.DOG_FACE, Nature.CAT_FACE, Nature.MOUSE_FACE, Nature.HAMSTER_FACE, Nature.RABBIT_FACE, Nature.MONKEY_FACE, Nature.KOALA_FACE,Nature.PIG_FACE,Nature.WOLF_FACE};
 
-    public String[] colours = {"#0074D9", "#FF851B", "#01FF70", "#85144b", "#468499", "#800080","#daa520"};
+    public String[] colours = {"#0074D9", "#FF851B", "#01FF70", "#85144b", "#468499", "#800080","#daa520","#b324c8","#e62331"};
 
     public int getHash(String id, String postId) {
         return Math.abs(id.hashCode()
