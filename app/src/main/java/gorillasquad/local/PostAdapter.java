@@ -44,9 +44,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
 
         TextView postText = (TextView) v.findViewById(R.id.postText);
         TextView rating = (TextView) v.findViewById(R.id.rating);
-        TextView timestamp = (TextView) v.findViewById(R.id.timestamp);
 
-        timestamp.setText(ph.convertTime(p.getTimestamp()));
         postText.setText(p.getText());
         rating.setText(p.getRating()+"");
 
@@ -69,11 +67,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
             }
         });
 
-        if(p.getUpVotes().contains(ph.getMyId())){
-            upVoteButton.setImageResource(R.drawable.up_arrow_highlight);
-        }else if(p.getDownVotes().contains(ph.getMyId())){
-            downVoteButton.setImageResource(R.drawable.down_arrow_highlight);
-        }
+
         reportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +81,6 @@ public class PostAdapter extends ArrayAdapter<Post> {
                 Log.d(TAG,p.getKey());
                 intent.putExtra("postId",p.getKey());
                 intent.putExtra("ownerHash",p.getOwnerHash());
-                intent.putExtra("post",p);
                 getContext().startActivity(intent);
             }
         });
