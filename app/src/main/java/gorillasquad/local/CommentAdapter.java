@@ -52,7 +52,9 @@ public class CommentAdapter extends ArrayAdapter<Post> {
         TextView postText = (TextView) v.findViewById(R.id.postText);
         TextView rating = (TextView) v.findViewById(R.id.rating);
         TextView commentIcon = (TextView) v.findViewById(R.id.commentIcon);
+        TextView timestamp = (TextView) v.findViewById(R.id.timestamp);
 
+        timestamp.setText(ph.convertTime(p.getTimestamp()));
         postText.setText(p.getText());
         rating.setText(p.getRating()+"");
 

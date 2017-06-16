@@ -4,6 +4,7 @@
 -scroll to bottom when new comment is added
 -keyboard should allow emoji input
 -timestamps
+-add more colours and icons
 
 DONE:
 -find and fix comment order bug

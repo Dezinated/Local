@@ -11,6 +11,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 
 import gorillasquad.local.emojis.Nature;
 
@@ -89,6 +90,29 @@ public class PostHandler {
                 db.update("root/comments/"+ch.getMainPost().getKey()+"/"+p.getKey(),p.toMap());
             }
         }
+    }
+
+    public String convertTime(long timestamp){
+        long time = System.currentTimeMillis() - timestamp;
+        Log.d(TAG,System.currentTimeMillis()+" - "+timestamp+" = " + time);
+        if(time > (1000*60*60*24*365)) { //1 year
+            Date date = new Date(timestamp);
+            return date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getYear();
+        }
+        if(time > (1000*60*60*24*7)) { //1 week day
+            Date date = new Date(timestamp);
+            return date.getDate() + "/" + (date.getMonth()+1);
+        }
+        if(time > (1000*60*60*48)) { //2 day
+            return ((((((time/1000)/60)/60)/24)))+" days ago";
+        }
+        if(time > (1000*60*60)) { //1 hour
+            return ((((((time/1000)/60)/60))))+"h ago";
+        }
+        if(time > (1000*60)) { //60 seconds
+            return (((time/1000)/60))+"m ago";
+        }
+        return "now";
     }
 
     public void votePost(Post p, boolean upVote){
