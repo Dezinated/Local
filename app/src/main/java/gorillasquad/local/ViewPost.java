@@ -2,6 +2,7 @@ package gorillasquad.local;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,13 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.w3c.dom.Comment;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -32,6 +36,7 @@ public class ViewPost extends AppCompatActivity {
     private int ownerHash;
     private PostHandler ph;
     private String myId;
+    private Post p;
 
     public ViewPost() {
 
@@ -58,11 +63,59 @@ public class ViewPost extends AppCompatActivity {
 
         postId = getIntent().getStringExtra("postId");
         ownerHash = getIntent().getIntExtra("ownerHash",0);
+        p = getIntent().getParcelableExtra("post");
+
 
         ph.getCh().setPostId(postId);
         commentList.setAdapter(ph.getCh().getCommentAdapter());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        TextView postText = (TextView) findViewById(R.id.viewPostText);
+        final TextView ratingText = (TextView) findViewById(R.id.viewPostRating);
+        postText.setText(p.getText());
+        ratingText.setText(p.getRating()+"");
+
+        final ImageButton upVoteButton = (ImageButton) findViewById(R.id.upVoteButton);
+        final ImageButton downVoteButton = (ImageButton) findViewById(R.id.downVoteButton);
+
+        if(p.getUpVotes().contains(myId)){
+            upVoteButton.setImageResource(R.drawable.up_arrow_highlight);
+        }else if(p.getDownVotes().contains(myId)){
+            downVoteButton.setImageResource(R.drawable.down_arrow_highlight);
+        }
+
+        upVoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ph.votePost(p,true);
+                ratingText.setText(p.getRating()+"");
+                upVoteButton.setImageResource(R.drawable.up_arrow);
+                downVoteButton.setImageResource(R.drawable.down_arrow);
+                if(p.getUpVotes().contains(myId)){
+                    upVoteButton.setImageResource(R.drawable.up_arrow_highlight);
+                }else if(p.getDownVotes().contains(myId)){
+                    downVoteButton.setImageResource(R.drawable.down_arrow_highlight);
+                }
+            }
+        });
+        downVoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ph.votePost(p,false);
+                ratingText.setText(p.getRating()+"");
+                upVoteButton.setImageResource(R.drawable.up_arrow);
+                downVoteButton.setImageResource(R.drawable.down_arrow);
+                if(p.getUpVotes().contains(myId)){
+                    upVoteButton.setImageResource(R.drawable.up_arrow_highlight);
+                }else if(p.getDownVotes().contains(myId)){
+                    downVoteButton.setImageResource(R.drawable.down_arrow_highlight);
+                }
+            }
+        });
+
+
     }
 
     public boolean onOptionsItemSelected(MenuItem item){

@@ -53,6 +53,8 @@ public class PostHandler {
                 + postId.hashCode());
     }
 
+    public String getMyId() { return myId; }
+
     public String iconFromHash(int hash) {
         return icons[hash % icons.length].toString();
     }

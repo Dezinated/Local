@@ -74,6 +74,12 @@ public class CommentAdapter extends ArrayAdapter<Post> {
             }
         });
 
+        if(p.getUpVotes().contains(ph.getMyId())){
+            upVoteButton.setImageResource(R.drawable.up_arrow_highlight);
+        }else if(p.getDownVotes().contains(ph.getMyId())){
+            downVoteButton.setImageResource(R.drawable.down_arrow_highlight);
+        }
+
         return v;
     }
 }

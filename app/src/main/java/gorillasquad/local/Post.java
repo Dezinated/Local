@@ -1,5 +1,7 @@
 package gorillasquad.local;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.google.firebase.database.ServerValue;
@@ -14,7 +16,7 @@ import java.util.Map;
  * Created by Jason on 6/13/2017.
  */
 
-public class Post {
+public class Post implements Parcelable {
 
     private String key;
     private String text;
@@ -45,6 +47,20 @@ public class Post {
         this.icon = icon;
         this.colour = colour;
         this.ownerHash = ownerHash;
+    }
+
+    public Post(Parcel in){
+        this.author = in.readString();
+        this.text = in.readString();
+        this.key = in.readString();
+        this.timestamp = in.readLong();
+        this.rating = in.readInt();
+        this.reports = in.readInt();
+        this.upVotes = in.readArrayList(String.class.getClassLoader());
+        this.downVotes = in.readArrayList(String.class.getClassLoader());
+        this.icon = in.readString();
+        this.colour = in.readString();
+        this.ownerHash = in.readInt();
     }
 
     public String getKey() {
@@ -177,4 +193,42 @@ public class Post {
         map.put("downVotes",downVotes);
         return map;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(author);
+        out.writeString(text);
+        out.writeString(key);
+        out.writeLong(timestamp);
+        out.writeInt(rating);
+        out.writeInt(reports);
+        out.writeList(upVotes);
+        out.writeList(downVotes);
+        out.writeString(icon);
+        out.writeString(colour);
+        out.writeInt(ownerHash);
+    }
+
+    public static final Parcelable.Creator<Post> CREATOR
+            = new Parcelable.Creator<Post>() {
+
+        // This simply calls our new constructor (typically private) and
+        // passes along the unmarshalled `Parcel`, and then returns the new object!
+        @Override
+        public Post createFromParcel(Parcel in) {
+            return new Post(in);
+        }
+
+        // We just need to copy this and change the type to match our class.
+        @Override
+        public Post[] newArray(int size) {
+            return new Post[size];
+        }
+    };
+
 }
