@@ -1,6 +1,8 @@
 package gorillasquad.local;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -68,9 +71,32 @@ public class PostAdapter extends ArrayAdapter<Post> {
         });
 
 
+
         reportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "Reporting to the cyber cops");
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+                mBuilder.setTitle("Report Post");
+                mBuilder.setMessage("Are you sure you want to report this post?");
+                mBuilder.setPositiveButton("Report", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast toast = Toast.makeText(getContext(), "Post reported for review", Toast.LENGTH_LONG);
+                        toast.show();
+                        dialogInterface.dismiss();
+                    }
+                });
+                mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                AlertDialog aleartDialog = mBuilder.create();
+                aleartDialog.show();
+
             }
         });
 
