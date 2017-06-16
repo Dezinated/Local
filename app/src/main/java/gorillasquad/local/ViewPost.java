@@ -32,8 +32,6 @@ public class ViewPost extends AppCompatActivity {
 
     private String TAG = "ViewPost";
 
-    private String postId;
-    private int ownerHash;
     private PostHandler ph;
     private String myId;
     private Post p;
@@ -50,8 +48,10 @@ public class ViewPost extends AppCompatActivity {
         setTitle("");
         Log.d(TAG,"Created view post");
 
+        p = getIntent().getParcelableExtra("post");
+
         myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        ph = new PostHandler(myId,this);
+        ph = new PostHandler(myId,this, p);
 
         ListView commentList = (ListView) findViewById(R.id.commentsList);
 
@@ -61,12 +61,10 @@ public class ViewPost extends AppCompatActivity {
         commentList.addHeaderView(header, null, false);
         commentList.addFooterView(footer, null, false);
 
-        postId = getIntent().getStringExtra("postId");
-        ownerHash = getIntent().getIntExtra("ownerHash",0);
-        p = getIntent().getParcelableExtra("post");
 
 
-        ph.getCh().setPostId(postId);
+
+        ph.getCh().setPost(p);
         commentList.setAdapter(ph.getCh().getCommentAdapter());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -133,13 +131,8 @@ public class ViewPost extends AppCompatActivity {
         if(postText.getText().length() < amount) {
             Toast.makeText(this, "Enter a message with more than "+amount+" characters.", Toast.LENGTH_SHORT).show();
         }else {
-            Log.d(TAG,myId);
-            Log.d(TAG,postId);
-            int hash = ph.getHash(myId,postId);
-            if(hash == ownerHash)
-                ph.addPost(postText.getText().toString(),"comments/"+postId+"/","OP","#9900cc",hash);
-            else
-                ph.addPost(postText.getText().toString(),"comments/"+postId+"/",hash);
+            int hash = ph.getHash(myId,p.getKey());
+            ph.addPost(postText.getText().toString(),"comments/"+p.getKey()+"/",hash);
         }
     }
 }

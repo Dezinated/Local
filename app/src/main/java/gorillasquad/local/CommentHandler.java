@@ -25,18 +25,18 @@ public class CommentHandler {
     private Context c;
     CommentAdapter ca;
     PostHandler ph;
-    private String mainPostId;
+    private Post mainPost;
 
-    public CommentHandler(String id, String mainPostId, Context c, PostHandler ph) {
+    public CommentHandler(String id, Post p, Context c, PostHandler ph) {
         comments = new ArrayList<Post>();
         db = Database.getDB();
         myId = id;
-        this.mainPostId = mainPostId;
-        ca = new CommentAdapter(c,comments,ph);
+        this.mainPost = p;
+        ca = new CommentAdapter(c,comments,ph,p.getOwnerHash());
         //db.getRef("comments/"+mainPostId).orderByChild("timestamp").addChildEventListener(commentListener);
     }
 
-    public String getMainPostId() { return mainPostId; }
+    public Post getMainPost() { return mainPost; }
 
     public ArrayList<Post> getComments() {
         return comments;
@@ -46,10 +46,10 @@ public class CommentHandler {
         return ca;
     }
 
-    public void setPostId(String id){
-        db.getRef("comments/"+mainPostId).removeEventListener(commentListener);
-        mainPostId = id;
-        db.getRef("comments/"+mainPostId).orderByChild("timestamp").addChildEventListener(commentListener);
+    public void setPost(Post p){
+        db.getRef("comments/"+mainPost.getKey()).removeEventListener(commentListener);
+        mainPost = p;
+        db.getRef("comments/"+mainPost.getKey()).orderByChild("timestamp").addChildEventListener(commentListener);
     }
 
     ChildEventListener commentListener = new ChildEventListener() {

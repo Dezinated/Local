@@ -3,10 +3,7 @@
 -add functionality for report system
 -scroll to bottom when new comment is added
 -keyboard should allow emoji input
--remove uploading of icons and colour, calc it client side based off ownerHash
--design can be improved
 -timestamps
--highlight arrow after vote
 
 DONE:
 -find and fix comment order bug
@@ -14,6 +11,8 @@ DONE:
 -add icon for OP
 -add post info to view post
 -new arrows
+-highlight arrow after vote
+-remove uploading of icons and colour, calc it client side based off ownerHash
 
 LATER:
 add users section in database

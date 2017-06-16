@@ -34,7 +34,14 @@ public class PostHandler {
         db = Database.getDB();
         myId = id;
         mph = new MainPostHandler(id,c,this);
-        ch = new CommentHandler(id,"",c,this);
+        ch = new CommentHandler(id,new Post(),c,this);
+    }
+
+    public PostHandler(String id, Context c, Post p){
+        db = Database.getDB();
+        myId = id;
+        mph = new MainPostHandler(id,c,this);
+        ch = new CommentHandler(id,p,c,this);
     }
 
     public MainPostHandler getMph() {
@@ -63,17 +70,12 @@ public class PostHandler {
         return colours[hash % colours.length];
     }
 
-    public void addPost(String text,String location,int hash) {
-        Log.d(TAG,"Adding new post");
-        addPost(text,location,iconFromHash(hash),colourFromHash(hash),hash);
-    }
-
-    public void addPost(String text, String location, String icon, String colour,int hash){
+    public void addPost(String text, String location,int hash){
         String key = db.addNew("root/"+location);
         if(hash == 0){
             hash = getHash(myId,key);
         }
-        Post p = new Post(myId,text,key,0,0,0,icon,colour,hash);
+        Post p = new Post(myId,text,key,0,0,0,hash);
         Log.d(TAG,p.getKey());
         db.set("root/"+location+"/"+key,p.toMap());
     }
@@ -84,7 +86,7 @@ public class PostHandler {
         for(Post p:ch.getComments()) {
             if (p.getKey().equals(postId)) {
                 vote(p,upVote);
-                db.update("root/comments/"+ch.getMainPostId()+"/"+p.getKey(),p.toMap());
+                db.update("root/comments/"+ch.getMainPost().getKey()+"/"+p.getKey(),p.toMap());
             }
         }
     }

@@ -26,8 +26,6 @@ public class Post implements Parcelable {
     private int reports;
     private List<String> upVotes;
     private List<String> downVotes;
-    private String icon;
-    private String colour;
     private int ownerHash;
 
     public Post() {
@@ -35,7 +33,7 @@ public class Post implements Parcelable {
         downVotes = new ArrayList<>();
     }
 
-    public Post(String author, String text, String key, long timestamp, int rating, int reports,String icon,String colour,int ownerHash) {
+    public Post(String author, String text, String key, long timestamp, int rating, int reports,int ownerHash) {
         this.author = author;
         this.text = text;
         this.key = key;
@@ -44,8 +42,6 @@ public class Post implements Parcelable {
         this.reports = reports;
         this.upVotes = new ArrayList<>();
         this.downVotes = new ArrayList<>();
-        this.icon = icon;
-        this.colour = colour;
         this.ownerHash = ownerHash;
     }
 
@@ -58,8 +54,6 @@ public class Post implements Parcelable {
         this.reports = in.readInt();
         this.upVotes = in.readArrayList(String.class.getClassLoader());
         this.downVotes = in.readArrayList(String.class.getClassLoader());
-        this.icon = in.readString();
-        this.colour = in.readString();
         this.ownerHash = in.readInt();
     }
 
@@ -131,21 +125,6 @@ public class Post implements Parcelable {
         this.downVotes = downVotes;
     }
 
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String getColour() {
-        return colour;
-    }
-
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
 
     public void addVote(boolean upVote, String id){
         if(upVotes == null || downVotes == null)
@@ -178,8 +157,6 @@ public class Post implements Parcelable {
                 map.put("author", author);
             }
         }
-        map.put("icon", icon);
-        map.put("colour", colour);
         if(timestamp == 0){
             map.put("timestamp", ServerValue.TIMESTAMP);
         }else {
@@ -209,8 +186,6 @@ public class Post implements Parcelable {
         out.writeInt(reports);
         out.writeList(upVotes);
         out.writeList(downVotes);
-        out.writeString(icon);
-        out.writeString(colour);
         out.writeInt(ownerHash);
     }
 

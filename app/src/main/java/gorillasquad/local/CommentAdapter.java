@@ -22,15 +22,18 @@ import java.util.ArrayList;
 
 public class CommentAdapter extends ArrayAdapter<Post> {
 
+    private String TAG = "CommentAdapter";
     private PostHandler ph;
+    private int ownerHash;
 
     public CommentAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
     }
 
-    public CommentAdapter(Context context, ArrayList<Post> items,PostHandler ph) {
+    public CommentAdapter(Context context, ArrayList<Post> items,PostHandler ph, int ownerHash) {
         super(context, R.layout.post, items);
         this.ph = ph;
+        this.ownerHash = ownerHash;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -42,12 +45,9 @@ public class CommentAdapter extends ArrayAdapter<Post> {
         final Post p = getItem(position);
 
 
-        int colour = 0;
-        if(p.getColour() != null){
-            colour = Color.parseColor(p.getColour());
-        }
+
         Drawable authorIcon = getContext().getResources().getDrawable(R.drawable.author_icon);
-        authorIcon.mutate().setColorFilter(colour, PorterDuff.Mode.MULTIPLY );
+
 
         TextView postText = (TextView) v.findViewById(R.id.postText);
         TextView rating = (TextView) v.findViewById(R.id.rating);
@@ -55,7 +55,17 @@ public class CommentAdapter extends ArrayAdapter<Post> {
 
         postText.setText(p.getText());
         rating.setText(p.getRating()+"");
-        commentIcon.setText(p.getIcon());
+
+        Log.d(TAG,p.getOwnerHash()+" "+ownerHash);
+        int colour = 0;
+        if(p.getOwnerHash() == ownerHash) {
+            commentIcon.setText("OP");
+            colour = Color.parseColor("#9900cc");
+        }else{
+            commentIcon.setText(ph.iconFromHash(p.getOwnerHash()));
+            colour = Color.parseColor(ph.colourFromHash(p.getOwnerHash()));
+        }
+        authorIcon.mutate().setColorFilter(colour, PorterDuff.Mode.MULTIPLY );
         commentIcon.setBackgroundDrawable(authorIcon);
 
         ImageButton upVoteButton = (ImageButton) v.findViewById(R.id.upVoteButton);
